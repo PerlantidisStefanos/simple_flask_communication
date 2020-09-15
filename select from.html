@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+	<head>
+	  <meta charset="utf-8">
+	  <title>Get table</title>
+	  <meta name="description" content="Flask API consumer">
+	  <meta name="author" content="d.p.iracleous">
+	  <link rel="stylesheet" href="styles.css?v=1.0">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	  <script>
+	  $( document ).ready(function() {
+			submitToServer();
+		});
+	  </script>
+	</head>
+	<body>
+ 
+ 
+<h1 align="center">Get table</h1>
+
+<form>
+	<table align="center" id ="responseTable" border="1">
+		 <tbody></tbody>
+ 	</table>
+</form>
+
+<div id="responseDiv"></div>
+
+
+   
+<script>
+ 
+function submitToServer(){
+ 
+	var	actionMethod = "GET"
+	var	actionUrl = "http://127.0.0.1:5000/get"
+ 
+		
+	$.ajax({
+		url: actionUrl,
+		type: actionMethod, //send it through get method
+		success: function(data) {
+
+			var tbl_body = "";
+			var odd_even = false;
+			$.each(data, function() {
+				var tbl_row =   "<td>"+this.Name+"</td>";
+					tbl_body += "<tr class=\""
+					+ ( odd_even ? "odd" : "even")
+					+ "\">"+tbl_row+"</tr>";
+				odd_even = !odd_even;               
+			});
+	 
+			$("#responseTable tbody").html(tbl_body);
+		},
+		error: function(xhr) {
+			console.log( xhr );
+		}
+	});
+		
+}	
+		
+		
+		
+	 
+	
+  
+  </script>
+  
+</body>
+</html>
